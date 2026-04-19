@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>牌组管理系统产品需求文档（PRD）v2 | AI PM 技术文档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    .prd-content h1 { font-size: 2rem; font-weight: 700; margin: 2rem 0 1rem; color: #f0f0f0; }
+    .prd-content h2 { font-size: 1.5rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #e0e0e0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
+    .prd-content h3 { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #d0d0d0; }
+    .prd-content h4 { font-size: 1.1rem; font-weight: 500; margin: 1rem 0 0.5rem; color: #c0c0c0; }
+    .prd-content p { margin: 0.75rem 0; line-height: 1.8; color: #b0b0b0; }
+    .prd-content ul, .prd-content ol { margin: 0.75rem 0; padding-left: 1.5rem; }
+    .prd-content li { margin: 0.5rem 0; color: #b0b0b0; }
+    .prd-content code { background: rgba(167, 139, 250, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #a78bfa; }
+    .prd-content pre { background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0; }
+    .prd-content pre code { background: none; padding: 0; }
+    .prd-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    .prd-content th, .prd-content td { border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; text-align: left; }
+    .prd-content th { background: rgba(167, 139, 250, 0.1); font-weight: 600; color: #e0e0e0; }
+    .prd-content td { color: #b0b0b0; }
+    .prd-content blockquote { border-left: 4px solid #a78bfa; padding-left: 1rem; margin: 1rem 0; color: #909090; font-style: italic; }
+    .prd-content hr { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 2rem 0; }
+    .prd-content a { color: #a78bfa; text-decoration: none; }
+    .prd-content a:hover { text-decoration: underline; }
+    .doc-meta { background: rgba(167, 139, 250, 0.05); border: 1px solid rgba(167, 139, 250, 0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+    .doc-meta-item { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .doc-meta-item:last-child { border-bottom: none; }
+    .doc-meta-label { color: #808080; }
+    .doc-meta-value { color: #e0e0e0; font-weight: 500; }
+    .status-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; }
+    .status-pending { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+    .status-completed { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .status-progress { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+    .toc { position: sticky; top: 100px; max-height: calc(100vh - 120px); overflow-y: auto; }
+    .toc a { display: block; padding: 0.5rem 0; color: #808080; font-size: 0.9rem; border-left: 2px solid transparent; padding-left: 1rem; margin-left: -1rem; }
+    .toc a:hover, .toc a.active { color: #a78bfa; border-left-color: #a78bfa; }
+    .toc a.level-2 { padding-left: 1.5rem; }
+    .toc a.level-3 { padding-left: 2rem; font-size: 0.85rem; }
+  </style>
+</head>
+<body class="bg-[#0f0f0f] text-gray-300">
+  <!-- 导航栏 -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0f0f0f]/95 backdrop-blur-md border-b border-white/5">
+    <div class="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-4">
+          <a href="../index.html" class="text-xl font-bold text-white flex items-center gap-2">
+            <span class="text-2xl">🧠</span>
+            <span>AI PM 技术文档</span>
+          </a>
+        </div>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="../index.html" class="text-sm text-gray-400 hover:text-white transition-colors">首页</a>
+          <a href="../architecture.html" class="text-sm text-gray-400 hover:text-white transition-colors">架构设计</a>
+          <a href="../prd-library.html" class="text-sm text-[#a78bfa] transition-colors">PRD 库</a>
+          <a href="../data-impact.html" class="text-sm text-gray-400 hover:text-white transition-colors">数据洞察</a>
+          <a href="../about.html" class="text-sm text-gray-400 hover:text-white transition-colors">关于</a>
+        </div>
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-400 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- 移动端菜单 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#1a1a1a] border-t border-white/5">
+      <div class="px-4 py-4 space-y-3">
+        <a href="../index.html" class="block text-gray-400 hover:text-white py-2">首页</a>
+        <a href="../architecture.html" class="block text-gray-400 hover:text-white py-2">架构设计</a>
+        <a href="../prd-library.html" class="block text-[#a78bfa] py-2">PRD 库</a>
+        <a href="../data-impact.html" class="block text-gray-400 hover:text-white py-2">数据洞察</a>
+        <a href="../about.html" class="block text-gray-400 hover:text-white py-2">关于</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主体内容 -->
+  <div class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 xl:px-12">
+    <div class="max-w-[1600px] mx-auto">
+      <div class="flex gap-8">
+        <!-- 左侧目录 -->
+        <aside class="hidden lg:block w-64 flex-shrink-0">
+          <div class="toc">
+            <h3 class="text-white font-semibold mb-4 px-4">目录</h3>
+            <nav>
+              <a href="#section-1" class="level-1">一、更新记录</a>
+              <a href="#section-2" class="level-1">二、产品概述</a>
+              <a href="#section-2-1" class="level-2">2.1 产品定位</a>
+              <a href="#section-2-2" class="level-2">2.2 核心目标</a>
+              <a href="#section-2-3" class="level-2">2.3 用户场景</a>
+              <a href="#section-3" class="level-1">三、功能需求</a>
+              <a href="#section-3-1" class="level-2">3.1 功能架构</a>
+              <a href="#section-3-2" class="level-2">3.2 功能模块详细说明</a>
+              <a href="#section-3-3" class="level-2">3.3 筛选与搜索</a>
+              <a href="#section-4" class="level-1">四、数据模型</a>
+              <a href="#section-5" class="level-1">五、界面设计</a>
+              <a href="#section-6" class="level-1">六、技术实现</a>
+              <a href="#section-7" class="level-1">七、实现计划</a>
+              <a href="#section-8" class="level-1">八、待完善功能清单</a>
+              <a href="#section-9" class="level-1">九、附录</a>
+            </nav>
+          </div>
+        </aside>
+
+        <!-- 右侧内容 -->
+        <main class="flex-1 min-w-0">
+          <!-- 面包屑 -->
+          <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+            <a href="../index.html" class="hover:text-white transition-colors">首页</a>
+            <span>/</span>
+            <a href="../prd-library.html" class="hover:text-white transition-colors">PRD 库</a>
+            <span>/</span>
+            <span class="text-white">牌组管理系统产品需求文档（PRD）v2</span>
+          </nav>
+
+          <!-- 文档标题 -->
+          <div class="mb-8">
+            <h1 class="text-4xl font-bold text-white mb-4">牌组管理系统产品需求文档（PRD）v2</h1>
+            <p class="text-xl text-gray-400">实体塔罗牌收藏的数字化管理与牌灵深度连接系统</p>
+          </div>
+
+          <!-- 文档元信息 -->
+          <div class="doc-meta">
+            <div class="doc-meta-item">
+              <span class="doc-meta-label">文档版本</span>
+              <span class="doc-meta-value">v2.0</span>
+            </div>
+            <div class="doc-meta-item">
+              <span class="doc-meta-label">创建日期</span>
+              <span class="doc-meta-value">2026-04-13</span>
+            </div>
+            <div class="doc-meta-item">
+              <span class="doc-meta-label">更新日期</span>
+              <span class="doc-meta-value">2026-04-13</span>
+            </div>
+            <div class="doc-meta-item">
+              <span class="doc-meta-label">文档状态</span>
+              <span class="doc-meta-value"><span class="status-badge status-pending">待评审</span></span>
+            </div>
+            <div class="doc-meta-item">
+              <span class="doc-meta-label">负责人</span>
+              <span class="doc-meta-value">AI总工程师</span>
+            </div>
+          </div>
+
+          <!-- PRD 内容 -->
+          <div class="prd-content">
+            <h2 id="section-1">一、更新记录</h2>
+            <h3>v2.0 更新内容</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>更新项</th>
+                  <th>原设计</th>
+                  <th>新设计</th>
+                  <th>原因</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>快捷操作</td>
+                  <td>包含"开始抽牌"</td>
+                  <td>移除"开始抽牌"</td>
+                  <td>抽牌有独立入口，避免重复</td>
+                </tr>
+                <tr>
+                  <td>常用牌组</td>
+                  <td>独立区块</td>
+                  <td>合并到全部牌组</td>
+                  <td>简化界面，横向滑动展示</td>
+                </tr>
+                <tr>
+                  <td>添加入口</td>
+                  <td>底部卡片</td>
+                  <td>最左侧"+"卡片</td>
+                  <td>与牌阵设计保持一致</td>
+                </tr>
+                <tr>
+                  <td>筛选条件</td>
+                  <td>分类筛选</td>
+                  <td>牌灵标签筛选</td>
+                  <td>更符合塔罗使用习惯</td>
+                </tr>
+                <tr>
+                  <td>牌组编号</td>
+                  <td>无</td>
+                  <td>自动生成"第N副"</td>
+                  <td>个性化管理，按购买日期排序</td>
+                </tr>
+                <tr>
+                  <td>版本/出版社</td>
+                  <td>必填字段</td>
+                  <td>移除</td>
+                  <td>非核心信息，简化流程</td>
+                </tr>
+                <tr>
+                  <td>牌数</td>
+                  <td>默认78张</td>
+                  <td>自由填写</td>
+                  <td>支持非标准牌组（如100+张）</td>
+                </tr>
+                <tr>
+                  <td>牌面展示</td>
+                  <td>详情页内</td>
+                  <td>独立子页面</td>
+                  <td>避免页面过长，内容模块化</td>
+                </tr>
+                <tr>
+                  <td>对话记录</td>
+                  <td>单一类型</td>
+                  <td>与牌对话+抽牌案例</td>
+                  <td>满足主观交流和客观记录需求</td>
+                </tr>
+                <tr>
+                  <td>数据关联</td>
+                  <td>简单关联</td>
+                  <td>多维度关联</td>
+                  <td>与牌灵、抽牌记录、客户档案打通</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 id="section-2">二、产品概述</h2>
+            <h3 id="section-2-1">2.1 产品定位</h3>
+            <p>牌组管理系统是塔罗笔记应用的核心模块，用于管理用户的<strong>实体塔罗牌收藏</strong>，记录牌组使用档案，建立与牌灵的深度连接。</p>
+
+            <h3 id="section-2-2">2.2 核心目标</h3>
+            <ol>
+              <li><strong>实体牌组数字化</strong> - 上传牌组图片，建立电子档案</li>
+              <li><strong>牌灵绑定与管理</strong> - 每副牌绑定一张大阿卡纳作为牌灵</li>
+              <li><strong>使用记录追踪</strong> - 记录每次使用牌组的抽牌案例</li>
+              <li><strong>多维度关联</strong> - 与牌灵、客户、抽牌记录形成数据网络</li>
+            </ol>
+
+            <h3 id="section-2-3">2.3 用户场景</h3>
+            <p><strong>场景1：新用户添加第一副牌</strong></p>
+            <blockquote>小美刚买了一副伟特塔罗，拍照上传到系统，选择"愚人"作为牌灵，系统自动标记为"第1副牌"。</blockquote>
+
+            <p><strong>场景2：记录与牌的对话</strong></p>
+            <blockquote>每天抽牌前，小美会和牌组"对话"，记录牌组给她的感受和建议，形成独特的"牌组日记"。</blockquote>
+
+            <p><strong>场景3：查看使用统计</strong></p>
+            <blockquote>一个月后，小美发现"第1副牌"使用频率最高，主要用于感情咨询；"第2副牌"（托特）主要用于自我探索。</blockquote>
+
+            <p><strong>场景4：低频使用提醒</strong></p>
+            <blockquote>系统提醒小美"第3副牌"已经10天没用了，她决定今天用这副牌给自己抽一张。</blockquote>
+
+            <h2 id="section-3">三、功能需求</h2>
+            <h3 id="section-3-1">3.1 功能架构</h3>
+            <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                      牌组管理系统                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
+│  │   牌组上传    │  │   牌灵绑定    │  │   使用记录    │      │
+│  │   Module     │  │   Module     │  │   Module     │      │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘      │
+│         │                 │                 │              │
+│         └─────────────────┼─────────────────┘              │
+│                           │                                │
+│                           ▼                                │
+│                  ┌─────────────────┐                       │
+│  ┌───────────────┤   数据关联中心   ├───────────────┐       │
+│  │               └─────────────────┘               │       │
+│  │                      │                          │       │
+│  ▼                      ▼                          ▼       │
+│ ┌──────────┐      ┌──────────┐      ┌──────────┐          │
+│ │ 牌灵总览  │      │ 抽牌记录  │      │ 客户档案  │          │
+│ │ (已存在)  │      │ (已存在)  │      │ (已存在)  │          │
+│ └──────────┘      └──────────┘      └──────────┘          │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+
+            <h3 id="section-3-2">3.2 功能模块详细说明</h3>
+            <h4>3.2.1 牌组上传模块</h4>
+            <p><strong>功能描述</strong>: 允许用户上传自己的实体塔罗牌组，建立电子档案</p>
+            <p><strong>核心流程</strong>:</p>
+            <pre><code>添加牌组
+├── Step 1: 上传图片
+│   ├── 牌盒封面图（必填）
+│   ├── 牌背照片（选填）
+│   └── 样张（选填，最多5张）
+│
+├── Step 2: 填写信息
+│   ├── 牌组名称（必填）
+│   ├── 购买日期（必填，用于生成编号）
+│   ├── 牌数（必填，默认78，可修改）
+│   ├── 品相（单选：全新/良好/一般/磨损）
+│   └── 备注（选填）
+│
+└── Step 3: 选择牌灵
+    ├── 展示22张大阿卡纳
+    ├── 支持搜索和筛选（元素）
+    └── 支持随机抽取</code></pre>
+
+            <p><strong>自动生成编号规则</strong>:</p>
+            <ul>
+              <li>根据购买日期排序</li>
+              <li>最早购买的为"第1副牌"</li>
+              <li>编号格式："第N副"</li>
+              <li>编号不可手动修改</li>
+            </ul>
+
+            <h4>3.2.2 牌灵绑定模块</h4>
+            <p><strong>绑定规则</strong>:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>规则项</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>绑定数量</td>
+                  <td>1副牌组 = 1张牌灵</td>
+                </tr>
+                <tr>
+                  <td>更换规则</td>
+                  <td>原则上不更换，支持"换主人"重新绑定</td>
+                </tr>
+                <tr>
+                  <td>绑定方式</td>
+                  <td>主动选择 / 随机抽取</td>
+                </tr>
+                <tr>
+                  <td>数据关联</td>
+                  <td>与牌灵总览的22张牌数据关联</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4>3.2.3 使用记录模块</h4>
+            <p><strong>记录类型</strong>:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>类型</th>
+                  <th>说明</th>
+                  <th>内容</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>与牌对话</td>
+                  <td>主观交流记录</td>
+                  <td>问题、感受、抽到的牌</td>
+                </tr>
+                <tr>
+                  <td>抽牌案例</td>
+                  <td>客观服务记录</td>
+                  <td>客户、问题、牌阵、结果</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3 id="section-3-3">3.3 筛选与搜索</h3>
+            <p><strong>筛选条件</strong>:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>筛选类型</th>
+                  <th>选项</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>牌灵标签</td>
+                  <td>全部/愚人/魔术师/女祭司/...</td>
+                  <td>按牌灵筛选</td>
+                </tr>
+                <tr>
+                  <td>使用频率</td>
+                  <td>常用/偶尔/很少/未使用</td>
+                  <td>按使用次数</td>
+                </tr>
+                <tr>
+                  <td>品相</td>
+                  <td>全部/全新/良好/一般/磨损</td>
+                  <td>按品相状态</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 id="section-4">四、数据模型</h2>
+            <h3>4.1 核心数据模型</h3>
+            <pre><code>// ==================== 牌组（Deck）====================
+const deckSchema = {
+  // 基础标识
+  id: "deck_user_001",
+  userId: "user_001",
+  
+  // 编号（自动生成）
+  sequenceNumber: 1,                // 第N副牌
+  
+  // 基本信息
+  name: "我的第一副伟特",
+  presetId: "deck_rider_waite",     // 关联预设牌组（可选）
+  
+  // 牌灵绑定
+  spirit: {
+    cardId: "fool",                 // 牌灵ID（关联牌灵总览）
+    cardName: "愚人",
+    bondedAt: "2024-01-15T10:00:00Z",
+    bondType: "chosen" | "drawn"
+  },
+  
+  // 实体图片
+  images: {
+    cover: "data:image/jpeg;base64,...",      // 牌盒封面
+    back: "data:image/jpeg;base64,...",       // 牌背
+    samples: ["...", "..."]                    // 样张
+  },
+  
+  // 牌组档案
+  archive: {
+    purchaseDate: "2024-01-15",     // 购买日期（必填，用于排序）
+    purchasePrice: 128,             // 购买价格（选填）
+    condition: "brand_new",         // 品相
+    cardCount: 78,                  // 牌数（支持非78张）
+    size: "7x12cm",                 // 尺寸（选填）
+    material: "铜版纸",              // 材质（选填）
+    notes: "第一副牌"                 // 备注
+  },
+  
+  // 性格档案
+  personality: {
+    description: "这副牌性格活泼...",
+    traits: ["活泼", "冒险"],         // 基础性格（来自牌灵）
+    userTags: ["温柔", "鼓励型"],     // 用户标签
+    conversations: [                  // 对话记录
+      {
+        id: "conv_001",
+        type: "dialogue",             // dialogue | case
+        date: "2024-06-01T15:30:00Z",
+        question: "你今天心情如何？",
+        answer: "我感受到无限的可能性...",
+        cards: ["fool", "sun"],
+        clientId: null,               // 对话类型无客户
+        drawRecordId: null
+      },
+      {
+        id: "conv_002",
+        type: "case",                 // 抽牌案例
+        date: "2024-05-28T20:15:00Z",
+        clientId: "client_001",
+        clientName: "王小美",
+        question: "感情发展",
+        spreadId: "three",
+        spreadName: "三牌阵",
+        cards: ["magician", "wheel", "sun"],
+        drawRecordId: "draw_001"
+      }
+    ]
+  },
+  
+  // 使用统计
+  stats: {
+    totalUses: 45,
+    firstUsedAt: "2024-01-15T10:00:00Z",
+    lastUsedAt: "2024-06-01T15:30:00Z",
+    weeklyUses: 3,
+    monthlyUses: 12,
+    averageDaily: 0.3,
+    favoriteSpread: "three",
+    trend: [0, 1, 2, 1, 0, 3, ...],  // 最近30天
+    
+    // 提醒设置
+    reminder: {
+      enabled: true,
+      thresholdDays: 7,
+      lastRemindedAt: null
+    }
+  },
+  
+  // 状态
+  status: {
+    isPinned: true,
+    isActive: true,
+    isArchived: false
+  },
+  
+  // 元数据
+  createdAt: "2024-01-15T10:00:00Z",
+  updatedAt: "2024-06-01T15:30:00Z"
+};</code></pre>
+
+            <h2 id="section-5">五、界面设计</h2>
+            <h3>5.1 页面清单</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>页面</th>
+                  <th>路径</th>
+                  <th>功能</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>我的牌组</td>
+                  <td>tarot-mine.html</td>
+                  <td>牌组管理主页面</td>
+                </tr>
+                <tr>
+                  <td>牌组详情</td>
+                  <td>deck-detail.html</td>
+                  <td>单个牌组详情</td>
+                </tr>
+                <tr>
+                  <td>牌面展示</td>
+                  <td>deck-cards.html</td>
+                  <td>牌面子页面</td>
+                </tr>
+                <tr>
+                  <td>添加牌组</td>
+                  <td>deck-add.html (弹窗)</td>
+                  <td>三步添加流程</td>
+                </tr>
+                <tr>
+                  <td>使用统计</td>
+                  <td>deck-stats.html</td>
+                  <td>数据可视化</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>5.2 设计原则</h3>
+            <ul>
+              <li><strong>与现有设计保持一致</strong> - 复用项目已有的视觉风格和交互原则</li>
+              <li><strong>横向滑动展示</strong> - 全部牌组采用横向滑动，+号在最左侧</li>
+              <li><strong>牌灵标签筛选</strong> - 筛选条件使用牌灵标签而非分类</li>
+              <li><strong>自动生成编号</strong> - "第N副牌"按购买日期自动生成</li>
+              <li><strong>模块化内容</strong> - 牌面展示独立为子页面，避免详情页过长</li>
+            </ul>
+
+            <h2 id="section-6">六、技术实现</h2>
+            <h3>6.1 存储架构</h3>
+            <p>采用<strong>离线优先 + 云端同步</strong>架构：</p>
+            <pre><code>前端 (Browser)
+├── Memory Cache (运行时缓存)
+├── IndexedDB (本地持久化)
+└── Supabase Client (云端同步)
+
+同步策略：
+1. 读取：Memory → IndexedDB → Supabase
+2. 写入：Memory → IndexedDB (同步) → Supabase (异步)</code></pre>
+
+            <h3>6.2 API 接口</h3>
+            <pre><code>// 牌组管理
+GET    /api/decks                    // 获取所有牌组
+GET    /api/decks/:id                // 获取单个牌组
+POST   /api/decks                    // 创建牌组
+PUT    /api/decks/:id                // 更新牌组
+DELETE /api/decks/:id                // 删除牌组
+PATCH  /api/decks/:id/pin            // 置顶/取消置顶
+PATCH  /api/decks/:id/spirit         // 更换牌灵
+
+// 使用记录
+POST   /api/decks/:id/usage          // 记录使用
+GET    /api/decks/:id/usage          // 获取使用记录
+
+// 对话记录
+POST   /api/decks/:id/conversation   // 添加对话
+GET    /api/decks/:id/conversation   // 获取对话记录
+
+// 统计数据
+GET    /api/decks/:id/stats          // 获取统计
+GET    /api/decks/:id/trend          // 获取趋势</code></pre>
+
+            <h2 id="section-7">七、实现计划</h2>
+            <h3>7.1 开发阶段</h3>
+            <h4>Phase 1: 基础功能（Week 1-2）</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>任务</th>
+                  <th>工期</th>
+                  <th>优先级</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>设计数据模型和API接口</td>
+                  <td>2天</td>
+                  <td>P0</td>
+                </tr>
+                <tr>
+                  <td>实现 IndexedDB 存储层</td>
+                  <td>2天</td>
+                  <td>P0</td>
+                </tr>
+                <tr>
+                  <td>实现牌组上传功能（三步流程）</td>
+                  <td>3天</td>
+                  <td>P0</td>
+                </tr>
+                <tr>
+                  <td>实现自动生成编号逻辑</td>
+                  <td>1天</td>
+                  <td>P0</td>
+                </tr>
+                <tr>
+                  <td>实现我的牌组列表页</td>
+                  <td>2天</td>
+                  <td>P0</td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Phase 1 交付</strong>: 可上传牌组、选择牌灵、查看列表</p>
+
+            <h4>Phase 2: 增强功能（Week 3-4）</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>任务</th>
+                  <th>工期</th>
+                  <th>优先级</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>实现牌组详情页</td>
+                  <td>3天</td>
+                  <td>P1</td>
+                </tr>
+                <tr>
+                  <td>实现牌面子页面</td>
+                  <td>2天</td>
+                  <td>P1</td>
+                </tr>
+                <tr>
+                  <td>实现使用记录统计</td>
+                  <td>2天</td>
+                  <td>P1</td>
+                </tr>
+                <tr>
+                  <td>实现低频使用提醒</td>
+                  <td>2天</td>
+                  <td>P1</td>
+                </tr>
+                <tr>
+                  <td>实现对话记录功能</td>
+                  <td>2天</td>
+                  <td>P1</td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Phase 2 交付</strong>: 完整的牌组档案、统计、提醒</p>
+
+            <h4>Phase 3: 数据关联（Week 5-6）</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>任务</th>
+                  <th>工期</th>
+                  <th>优先级</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>实现与牌灵总览关联</td>
+                  <td>2天</td>
+                  <td>P1</td>
+                </tr>
+                <tr>
+                  <td>实现与抽牌记录关联</td>
+                  <td>2天</td>
+                  <td>P1</td>
+                </tr>
+                <tr>
+                  <td>实现与客户档案关联</td>
+                  <td>2天</td>
+                  <td>P1</td>
+                </tr>
+                <tr>
+                  <td>标签同步（抽牌记录/客户档案）</td>
+                  <td>2天</td>
+                  <td>P1</td>
+                </tr>
+                <tr>
+                  <td>联调测试</td>
+                  <td>2天</td>
+                  <td>P2</td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Phase 3 交付</strong>: 完整的数据关联网络</p>
+
+            <h3>7.2 里程碑</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>里程碑</th>
+                  <th>日期</th>
+                  <th>交付内容</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>M1</td>
+                  <td>Week 2 结束</td>
+                  <td>基础功能完成，可上传管理牌组</td>
+                </tr>
+                <tr>
+                  <td>M2</td>
+                  <td>Week 4 结束</td>
+                  <td>增强功能完成，完整的档案系统</td>
+                </tr>
+                <tr>
+                  <td>M3</td>
+                  <td>Week 6 结束</td>
+                  <td>数据关联完成，全系统打通</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 id="section-8">八、待完善功能清单</h2>
+            <h3>8.1 功能清单（更新后）</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>功能模块</th>
+                  <th>功能点</th>
+                  <th>优先级</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>牌组上传</td>
+                  <td>上传牌盒封面图</td>
+                  <td>P0</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>牌组上传</td>
+                  <td>上传牌背照片</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>牌组上传</td>
+                  <td>上传样张</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>牌组上传</td>
+                  <td>填写牌组信息（名称/日期/牌数）</td>
+                  <td>P0</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>牌组上传</td>
+                  <td>自动生成"第N副"编号</td>
+                  <td>P0</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>牌组上传</td>
+                  <td>品相选择</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>牌灵绑定</td>
+                  <td>展示22张牌灵卡片</td>
+                  <td>P0</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>牌灵绑定</td>
+                  <td>搜索牌灵</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>牌灵绑定</td>
+                  <td>随机抽取牌灵</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>我的牌组</td>
+                  <td>横向滑动列表（+号在最前）</td>
+                  <td>P0</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>我的牌组</td>
+                  <td>牌灵标签筛选</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td>我的牌组</td>
+                  <td>搜索功能</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>13</td>
+                  <td>我的牌组</td>
+                  <td>置顶功能</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td>牌组详情</td>
+                  <td>展示牌组信息</td>
+                  <td>P0</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>15</td>
+                  <td>牌组详情</td>
+                  <td>展示牌灵信息</td>
+                  <td>P0</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>16</td>
+                  <td>牌组详情</td>
+                  <td>展示使用统计</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>17</td>
+                  <td>牌组详情</td>
+                  <td>牌组性格档案</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>18</td>
+                  <td>牌组详情</td>
+                  <td>对话与案例记录</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>19</td>
+                  <td>牌面子页面</td>
+                  <td>展示全部牌面</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>20</td>
+                  <td>牌面子页面</td>
+                  <td>搜索和筛选牌面</td>
+                  <td>P2</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>21</td>
+                  <td>使用统计</td>
+                  <td>基础统计（总/周/月）</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>22</td>
+                  <td>使用统计</td>
+                  <td>使用趋势图</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>23</td>
+                  <td>使用提醒</td>
+                  <td>低频使用检测</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>24</td>
+                  <td>使用提醒</td>
+                  <td>提醒通知UI</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>25</td>
+                  <td>数据关联</td>
+                  <td>与牌灵总览关联</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>26</td>
+                  <td>数据关联</td>
+                  <td>与抽牌记录关联</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>27</td>
+                  <td>数据关联</td>
+                  <td>与客户档案关联</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>28</td>
+                  <td>数据关联</td>
+                  <td>标签同步（抽牌记录/客户档案）</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>29</td>
+                  <td>数据存储</td>
+                  <td>IndexedDB存储</td>
+                  <td>P0</td>
+                  <td>待开发</td>
+                </tr>
+                <tr>
+                  <td>30</td>
+                  <td>数据存储</td>
+                  <td>Supabase同步</td>
+                  <td>P1</td>
+                  <td>待开发</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 id="section-9">九、附录</h2>
+            <h3>9.1 参考文档</h3>
+            <ul>
+              <li>项目总览与决策日志</li>
+              <li>牌组功能深化方案</li>
+              <li>牌组管理系统UI设计文档_v2</li>
+              <li>预设牌组数据</li>
+            </ul>
+
+            <h3>9.2 相关页面</h3>
+            <ul>
+              <li>牌灵总览: <code>src/pages/tarot-cards.html</code></li>
+              <li>我的牌组: <code>src/pages/tarot-mine.html</code></li>
+              <li>抽牌记录: <code>src/pages/draw-record.html</code></li>
+              <li>客户档案: <code>src/pages/client-list.html</code></li>
+            </ul>
+
+            <h3>9.3 数据关联检查清单</h3>
+            <ul>
+              <li>[ ] 牌组与牌灵总览数据关联</li>
+              <li>[ ] 牌组与抽牌记录关联</li>
+              <li>[ ] 牌组与客户档案关联</li>
+              <li>[ ] 抽牌记录页面显示牌组标签</li>
+              <li>[ ] 客户档案页面显示牌组偏好</li>
+              <li>[ ] 抽牌页面牌组下拉菜单</li>
+            </ul>
+
+            <hr>
+            <p class="text-center text-gray-500">文档结束</p>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="border-t border-white/5 py-8 px-4 sm:px-6 lg:px-8 xl:px-12">
+    <div class="max-w-[1600px] mx-auto text-center text-gray-500 text-sm">
+      <p>© 2026 AI PM 技术文档 | 使用 HTML + Tailwind CSS 构建</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#a78bfa',
+        primaryTextColor: '#f0f0f0',
+        primaryBorderColor: '#a78bfa',
+        lineColor: '#666',
+        secondaryColor: '#1a1a1a',
+        tertiaryColor: '#0f0f0f'
+      }
+    });
+
+    // 目录高亮
+    const sections = document.querySelectorAll('.prd-content h2[id], .prd-content h3[id]');
+    const tocLinks = document.querySelectorAll('.toc a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

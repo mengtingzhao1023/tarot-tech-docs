@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="多AI协同开发框架 - 10层闭环架构与9步开发流程">
+    <title>架构总览 | AI PM Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#a78bfa',
+                        'primary-dark': '#8b5cf6',
+                        'primary-light': '#c4b5fd',
+                        background: '#0f0f0f',
+                        'card-bg': 'rgba(255, 255, 255, 0.05)',
+                        'card-hover': 'rgba(255, 255, 255, 0.08)',
+                        'border-default': 'rgba(255, 255, 255, 0.1)',
+                        'border-hover': 'rgba(255, 255, 255, 0.2)',
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Mermaid -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body class="bg-background text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-b border-border-default">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-xl font-semibold text-white hover:text-primary transition">
+                <span>🤖</span>
+                <span>AI PM Portfolio</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="nav-link" data-page="index.html">首页</a>
+                <a href="architecture.html" class="nav-link active" data-page="architecture.html">架构总览</a>
+                <a href="topic-model.html" class="nav-link" data-page="topic-model.html">技术专题</a>
+                <a href="prd-library.html" class="nav-link" data-page="prd-library.html">PRD文档</a>
+                <a href="data-impact.html" class="nav-link" data-page="data-impact.html">数据影响</a>
+                <a href="about.html" class="nav-link" data-page="about.html">关于我</a>
+                <a href="赵梦婷AI产品方向简历.pdf" download class="btn btn--primary text-sm py-2 px-4">下载简历</a>
+            </div>
+            
+            <button id="mobileMenuBtn" class="md:hidden text-white p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div id="mobileMenu" class="hidden md:hidden bg-background border-t border-border-default">
+            <div class="px-6 py-4 space-y-3">
+                <a href="index.html" class="block py-2 text-white/60 hover:text-white">首页</a>
+                <a href="architecture.html" class="block py-2 text-primary font-medium">架构总览</a>
+                <a href="topic-model.html" class="block py-2 text-white/60 hover:text-white">技术专题</a>
+                <a href="prd-library.html" class="block py-2 text-white/60 hover:text-white">PRD文档</a>
+                <a href="data-impact.html" class="block py-2 text-white/60 hover:text-white">数据影响</a>
+                <a href="about.html" class="block py-2 text-white/60 hover:text-white">关于我</a>
+                <a href="赵梦婷AI产品方向简历.pdf" download class="block py-2 text-primary font-medium">下载简历</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-16 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl font-bold text-white mb-4">架构总览</h1>
+                <h2 class="text-2xl font-semibold text-primary mb-6">多AI协同开发框架</h2>
+                <p class="text-lg text-white/60 max-w-2xl mx-auto">
+                    基于10层闭环架构和9步开发流程，构建可复用的AI协同开发体系，支撑塔罗师智能工作平台的完整实现
+                </p>
+            </div>
+        </section>
+        
+        <!-- 10 Layer Architecture -->
+        <section class="py-16 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-4">10层闭环架构</h2>
+                    <p class="text-white/60">支撑完整开发链路的基础设施</p>
+                </div>
+                
+                <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                    <!-- Layer 1-5 -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-6">
+                        <div class="layer-box">
+                            <div class="text-xs text-primary mb-1">L1</div>
+                            <div class="font-semibold">规则层</div>
+                            <div class="text-xs text-white/60 mt-1">工程规范</div>
+                        </div>
+                        <span class="text-white/40 self-center">→</span>
+                        <div class="layer-box">
+                            <div class="text-xs text-primary mb-1">L2</div>
+                            <div class="font-semibold">记忆层</div>
+                            <div class="text-xs text-white/60 mt-1">Skill上下文</div>
+                        </div>
+                        <span class="text-white/40 self-center">→</span>
+                        <div class="layer-box">
+                            <div class="text-xs text-primary mb-1">L3</div>
+                            <div class="font-semibold">模板层</div>
+                            <div class="text-xs text-white/60 mt-1">代码模板</div>
+                        </div>
+                        <span class="text-white/40 self-center">→</span>
+                        <div class="layer-box border-primary">
+                            <div class="text-xs text-primary mb-1">L4</div>
+                            <div class="font-semibold">架构层</div>
+                            <div class="text-xs text-white/60 mt-1">双层目录</div>
+                        </div>
+                        <span class="text-white/40 self-center">→</span>
+                        <div class="layer-box">
+                            <div class="text-xs text-primary mb-1">L5</div>
+                            <div class="font-semibold">同步层</div>
+                            <div class="text-xs text-white/60 mt-1">双设备同步</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Arrow Down -->
+                    <div class="flex justify-center mb-6">
+                        <span class="text-white/40 text-2xl">↓</span>
+                    </div>
+                    
+                    <!-- Layer 6-10 -->
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <div class="layer-box">
+                            <div class="text-xs text-primary mb-1">L6</div>
+                            <div class="font-semibold">调度层</div>
+                            <div class="text-xs text-white/60 mt-1">并行开发</div>
+                        </div>
+                        <span class="text-white/40 self-center">→</span>
+                        <div class="layer-box">
+                            <div class="text-xs text-primary mb-1">L7</div>
+                            <div class="font-semibold">质检层</div>
+                            <div class="text-xs text-white/60 mt-1">双层审查</div>
+                        </div>
+                        <span class="text-white/40 self-center">→</span>
+                        <div class="layer-box">
+                            <div class="text-xs text-primary mb-1">L8</div>
+                            <div class="font-semibold">安全层</div>
+                            <div class="text-xs text-white/60 mt-1">双路径备份</div>
+                        </div>
+                        <span class="text-white/40 self-center">→</span>
+                        <div class="layer-box">
+                            <div class="text-xs text-primary mb-1">L9</div>
+                            <div class="font-semibold">归档层</div>
+                            <div class="text-xs text-white/60 mt-1">知识沉淀</div>
+                        </div>
+                        <span class="text-white/40 self-center">→</span>
+                        <div class="layer-box border-primary bg-primary/10">
+                            <div class="text-xs text-primary mb-1">L10</div>
+                            <div class="font-semibold text-primary">交付层</div>
+                            <div class="text-xs text-white/60 mt-1">版本收敛</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Layer Details -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-card-bg border border-border-default rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">L1 规则层</h3>
+                        <p class="text-white/60 text-sm mb-3">工程规范制定、代码标准定义、接口契约设计</p>
+                        <p class="text-primary text-sm">在塔罗项目中：制定了前端组件规范、API接口规范、命名规则</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">L2 记忆层</h3>
+                        <p class="text-white/60 text-sm mb-3">Skill上下文管理、对话历史记录、项目记忆沉淀</p>
+                        <p class="text-primary text-sm">在塔罗项目中：使用tarot-memory skill记录项目上下文</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">L3 模板层</h3>
+                        <p class="text-white/60 text-sm mb-3">代码模板库、PRD模板、设计模式库</p>
+                        <p class="text-primary text-sm">在塔罗项目中：建立了页面模板、组件模板、PRD模板</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">L4 架构层</h3>
+                        <p class="text-white/60 text-sm mb-3">双层目录结构、模块划分、依赖管理</p>
+                        <p class="text-primary text-sm">在塔罗项目中：外层约束层+内层执行层的双层架构</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">L5 同步层</h3>
+                        <p class="text-white/60 text-sm mb-3">双设备同步、数据备份、版本控制</p>
+                        <p class="text-primary text-sm">在塔罗项目中：IndexedDB + Supabase双路径存储</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">L6 调度层</h3>
+                        <p class="text-white/60 text-sm mb-3">并行开发调度、任务分配、进度跟踪</p>
+                        <p class="text-primary text-sm">在塔罗项目中：多AI角色并行开发，前后端分离</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">L7 质检层</h3>
+                        <p class="text-white/60 text-sm mb-3">双层审查机制、代码审查、质量把关</p>
+                        <p class="text-primary text-sm">在塔罗项目中：分项自查+全局终审的双层审查</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">L8 安全层</h3>
+                        <p class="text-white/60 text-sm mb-3">双路径备份、数据安全、访问控制</p>
+                        <p class="text-primary text-sm">在塔罗项目中：本地存储+云端同步双保险</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">L9 归档层</h3>
+                        <p class="text-white/60 text-sm mb-3">知识沉淀、文档归档、经验总结</p>
+                        <p class="text-primary text-sm">在塔罗项目中：完整的PRD文档库和技术文档</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-3">L10 交付层</h3>
+                        <p class="text-white/60 text-sm mb-3">版本收敛、发布管理、交付验收</p>
+                        <p class="text-primary text-sm">在塔罗项目中：模块化交付，逐步上线</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 9 Step Process -->
+        <section class="py-16 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-4">9步开发流程</h2>
+                    <p class="text-white/60">从需求到交付的全流程工程化管理</p>
+                </div>
+                
+                <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                    <!-- Flow Chart -->
+                    <div class="mermaid mb-8">
+graph LR
+    A[Step 1<br/>需求定稿] --> B[Step 2<br/>规范制定]
+    B --> C[Step 3<br/>开源检索]
+    C --> D[Step 4<br/>角色拆分]
+    D --> E[Step 5<br/>独立开发]
+    E --> F[Step 6<br/>分项自查]
+    F --> G[Step 7<br/>全局终审]
+    G --> H[Step 8<br/>版本收敛]
+    H --> I[Step 9<br/>交付上线]
+    
+    style A fill:#a78bfa,stroke:#fff,color:#0f0f0f
+    style I fill:#a78bfa,stroke:#fff,color:#0f0f0f
+                    </div>
+                    
+                    <!-- Step Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">1</span>
+                                <h3 class="font-semibold text-white">需求定稿</h3>
+                            </div>
+                            <p class="text-sm text-white/60 mb-2">PRD文档定稿，功能边界确认</p>
+                            <p class="text-xs text-primary">输出: PRD、技术架构初稿</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">2</span>
+                                <h3 class="font-semibold text-white">规范制定</h3>
+                            </div>
+                            <p class="text-sm text-white/60 mb-2">工程标准定义，接口契约</p>
+                            <p class="text-xs text-primary">输出: 规范文档、目录模板</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">3</span>
+                                <h3 class="font-semibold text-white">开源检索</h3>
+                            </div>
+                            <p class="text-sm text-white/60 mb-2">优先复用现有方案</p>
+                            <p class="text-xs text-primary">输出: 技术选型报告</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">4</span>
+                                <h3 class="font-semibold text-white">角色拆分</h3>
+                            </div>
+                            <p class="text-sm text-white/60 mb-2">多窗口分工，并行开发</p>
+                            <p class="text-xs text-primary">输出: 任务分配表</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">5</span>
+                                <h3 class="font-semibold text-white">独立开发</h3>
+                            </div>
+                            <p class="text-sm text-white/60 mb-2">前后端并行，接口契约</p>
+                            <p class="text-xs text-primary">输出: 前端代码、后端代码</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">6</span>
+                                <h3 class="font-semibold text-white">分项自查</h3>
+                            </div>
+                            <p class="text-sm text-white/60 mb-2">代码审查，单元测试</p>
+                            <p class="text-xs text-primary">输出: 自查报告</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">7</span>
+                                <h3 class="font-semibold text-white">全局终审</h3>
+                            </div>
+                            <p class="text-sm text-white/60 mb-2">质量把关，一致性校验</p>
+                            <p class="text-xs text-primary">输出: 终审报告</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">8</span>
+                                <h3 class="font-semibold text-white">版本收敛</h3>
+                            </div>
+                            <p class="text-sm text-white/60 mb-2">模块冻结，分支合并</p>
+                            <p class="text-xs text-primary">输出: 收敛版本</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">9</span>
+                                <h3 class="font-semibold text-white">交付上线</h3>
+                            </div>
+                            <p class="text-sm text-white/60 mb-2">生产部署，版本发布</p>
+                            <p class="text-xs text-primary">输出: 上线版本</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Dual Architecture -->
+        <section class="py-16 px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-4">双层架构分工</h2>
+                    <p class="text-white/60">全局约束层与执行开发层的职责分离</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Outer Layer -->
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
+                                <span class="text-2xl">🎯</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white">外层全局约束层</h3>
+                                <p class="text-sm text-white/60">总工程师AI负责</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>需求定稿</strong> - PRD文档审核，功能边界确认</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>规范制定</strong> - 工程标准、接口契约定义</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>技术选型</strong> - 开源方案检索，复用策略</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>任务拆分</strong> - 角色分配，并行策略</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>全局终审</strong> - 代码规范、联动一致性</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>版本收敛</strong> - 模块冻结，交付把关</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Inner Layer -->
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
+                                <span class="text-2xl">⚡</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white">内层执行开发层</h3>
+                                <p class="text-sm text-white/60">各端工程师AI负责</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>独立开发</strong> - 按接口契约并行编码</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>规范遵循</strong> - 严格执行全局标准</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>单元测试</strong> - 模块级功能验证</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>分项自查</strong> - 代码质量、文档完整</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>接口对齐</strong> - 前后端契约确认</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span class="text-white/80"><strong>记忆更新</strong> - 每10轮更新Skill</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Architecture Advantages -->
+        <section class="py-16 px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-4">架构优势对比</h2>
+                    <p class="text-white/60">与传统开发方式的对比</p>
+                </div>
+                
+                <div class="bg-card-bg border border-border-default rounded-2xl overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-border-default">
+                                    <th class="text-left p-6 text-white font-semibold">特性</th>
+                                    <th class="text-left p-6 text-white/60 font-medium">传统开发</th>
+                                    <th class="text-left p-6 text-primary font-medium">多AI协同开发</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-border-default">
+                                    <td class="p-6 text-white font-medium">开发模式</td>
+                                    <td class="p-6 text-white/60">单人单线程</td>
+                                    <td class="p-6 text-white">多AI并行开发</td>
+                                </tr>
+                                <tr class="border-b border-border-default">
+                                    <td class="p-6 text-white font-medium">上下文管理</td>
+                                    <td class="p-6 text-white/60">易丢失，需重复说明</td>
+                                    <td class="p-6 text-white">Skill记忆持久化</td>
+                                </tr>
+                                <tr class="border-b border-border-default">
+                                    <td class="p-6 text-white font-medium">规范执行</td>
+                                    <td class="p-6 text-white/60">靠自觉，易偏离</td>
+                                    <td class="p-6 text-white">前置规范约束</td>
+                                </tr>
+                                <tr class="border-b border-border-default">
+                                    <td class="p-6 text-white font-medium">质量保证</td>
+                                    <td class="p-6 text-white/60">难以统一标准</td>
+                                    <td class="p-6 text-white">双层审查机制</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-6 text-white font-medium">知识沉淀</td>
+                                    <td class="p-6 text-white/60">难以复用经验</td>
+                                    <td class="p-6 text-white">自动归档复用</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white/5 border-t border-border-default">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-white/60 text-sm">
+                    赵梦婷 | AI产品助理/AI售前顾问
+                </div>
+                <div class="text-white/60 text-sm">
+                    邮箱: mengtingthea@163.com | 电话: 187-2530-3017
+                </div>
+            </div>
+            <div class="text-center text-white/40 text-sm mt-4">
+                © 2026 AI PM Portfolio. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#a78bfa',
+                primaryTextColor: '#0f0f0f',
+                primaryBorderColor: '#a78bfa',
+                lineColor: '#a78bfa',
+                secondaryColor: '#1a1a1a',
+                tertiaryColor: '#0f0f0f'
+            }
+        });
+    </script>
+</body>
+</html>

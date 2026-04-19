@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="数据影响力 - 项目数据价值展示">
+    <title>数据影响力 | AI PM Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#a78bfa',
+                        background: '#0f0f0f',
+                        'card-bg': 'rgba(255, 255, 255, 0.05)',
+                        'border-default': 'rgba(255, 255, 255, 0.1)',
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+</head>
+<body class="bg-background text-white min-h-screen">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-b border-border-default">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-xl font-semibold text-white hover:text-primary transition">
+                <span>🤖</span>
+                <span>AI PM Portfolio</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="nav-link" data-page="index.html">首页</a>
+                <a href="architecture.html" class="nav-link" data-page="architecture.html">架构总览</a>
+                <a href="topic-model.html" class="nav-link" data-page="topic-model.html">技术专题</a>
+                <a href="prd-library.html" class="nav-link" data-page="prd-library.html">PRD文档</a>
+                <a href="data-impact.html" class="nav-link active" data-page="data-impact.html">数据影响</a>
+                <a href="about.html" class="nav-link" data-page="about.html">关于我</a>
+                <a href="赵梦婷AI产品方向简历.pdf" download class="btn btn--primary text-sm py-2 px-4">下载简历</a>
+            </div>
+            <button id="mobileMenuBtn" class="md:hidden text-white p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-background border-t border-border-default">
+            <div class="px-6 py-4 space-y-3">
+                <a href="index.html" class="block py-2 text-white/60 hover:text-white">首页</a>
+                <a href="architecture.html" class="block py-2 text-white/60 hover:text-white">架构总览</a>
+                <a href="topic-model.html" class="block py-2 text-white/60 hover:text-white">技术专题</a>
+                <a href="prd-library.html" class="block py-2 text-white/60 hover:text-white">PRD文档</a>
+                <a href="data-impact.html" class="block py-2 text-primary font-medium">数据影响</a>
+                <a href="about.html" class="block py-2 text-white/60 hover:text-white">关于我</a>
+                <a href="赵梦婷AI产品方向简历.pdf" download class="block py-2 text-primary font-medium">下载简历</a>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="pt-16">
+        <section class="py-16 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">数据影响力</h1>
+                <h2 class="text-xl text-primary mb-6">Data Impact</h2>
+                <p class="text-lg text-white/60 max-w-2xl mx-auto">用数据说话，展示项目的技术价值和用户价值</p>
+            </div>
+        </section>
+        
+        <!-- Core Metrics -->
+        <section class="py-12 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="data-card">
+                        <div class="text-5xl font-bold text-primary mb-2">15K+</div>
+                        <div class="text-lg text-white mb-1">代码行数</div>
+                        <div class="text-sm text-white/60">行</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="text-5xl font-bold text-primary mb-2">25+</div>
+                        <div class="text-lg text-white mb-1">文档数量</div>
+                        <div class="text-sm text-white/60">篇</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="text-5xl font-bold text-primary mb-2">8</div>
+                        <div class="text-lg text-white mb-1">功能模块</div>
+                        <div class="text-sm text-white/60">个</div>
+                    </div>
+                    <div class="data-card">
+                        <div class="text-5xl font-bold text-primary mb-2">11</div>
+                        <div class="text-lg text-white mb-1">开发周期</div>
+                        <div class="text-sm text-white/60">天</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Charts -->
+        <section class="py-12 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-4">功能覆盖雷达图</h3>
+                        <div id="radarChart" style="width: 100%; height: 300px;"></div>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-white mb-4">技术能力分布</h3>
+                        <div id="pieChart" style="width: 100%; height: 300px;"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-card-bg border border-border-default rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold text-white mb-4">开发进度时间线</h3>
+                    <div id="lineChart" style="width: 100%; height: 300px;"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- User Value -->
+        <section class="py-12 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-8 text-center">预估用户价值</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-6">效率提升</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-white/60">抽牌记录效率</span>
+                                <span class="text-primary font-bold">+50%</span>
+                            </div>
+                            <div class="w-full bg-white/10 rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: 50%"></div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-white/60">客户管理效率</span>
+                                <span class="text-primary font-bold">+40%</span>
+                            </div>
+                            <div class="w-full bg-white/10 rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: 40%"></div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-white/60">解读准备时间</span>
+                                <span class="text-primary font-bold">-30%</span>
+                            </div>
+                            <div class="w-full bg-white/10 rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: 30%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-6">学习效果</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-white/60">学习效率</span>
+                                <span class="text-primary font-bold">+70%</span>
+                            </div>
+                            <div class="w-full bg-white/10 rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: 70%"></div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-white/60">案例掌握度</span>
+                                <span class="text-primary font-bold">+60%</span>
+                            </div>
+                            <div class="w-full bg-white/10 rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: 60%"></div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-white/60">实战能力提升</span>
+                                <span class="text-primary font-bold">+45%</span>
+                            </div>
+                            <div class="w-full bg-white/10 rounded-full h-2">
+                                <div class="bg-primary h-2 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-white/5 border-t border-border-default">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-white/60 text-sm">赵梦婷 | AI产品助理/AI售前顾问</div>
+                <div class="text-white/60 text-sm">邮箱: mengtingthea@163.com | 电话: 187-2530-3017</div>
+            </div>
+            <div class="text-center text-white/40 text-sm mt-4">© 2026 AI PM Portfolio. All rights reserved.</div>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        function initRadarChart() {
+            const chartDom = document.getElementById('radarChart');
+            if (!chartDom) return;
+            const myChart = echarts.init(chartDom);
+            const option = {
+                backgroundColor: 'transparent',
+                radar: {
+                    indicator: [
+                        { name: '抽牌系统', max: 100 },
+                        { name: '牌组管理', max: 100 },
+                        { name: '客户管理', max: 100 },
+                        { name: '个人记录', max: 100 }
+                    ],
+                    axisName: { color: '#fff' },
+                    splitArea: { areaStyle: { color: ['rgba(167,139,250,0.05)'] } }
+                },
+                series: [{
+                    type: 'radar',
+                    data: [{
+                        value: [95, 90, 85, 88],
+                        name: '功能完成度',
+                        areaStyle: { color: 'rgba(167,139,250,0.3)' },
+                        lineStyle: { color: '#a78bfa' }
+                    }]
+                }]
+            };
+            myChart.setOption(option);
+            window.addEventListener('resize', () => myChart.resize());
+        }
+        
+        function initPieChart() {
+            const chartDom = document.getElementById('pieChart');
+            if (!chartDom) return;
+            const myChart = echarts.init(chartDom);
+            const option = {
+                backgroundColor: 'transparent',
+                series: [{
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    data: [
+                        { value: 15, name: '模型选型', itemStyle: { color: '#a78bfa' } },
+                        { value: 15, name: '评测数据集', itemStyle: { color: '#c4b5fd' } },
+                        { value: 15, name: 'Bad Case', itemStyle: { color: '#8b5cf6' } },
+                        { value: 15, name: '知识库', itemStyle: { color: '#60a5fa' } },
+                        { value: 15, name: 'Agent', itemStyle: { color: '#4ade80' } },
+                        { value: 10, name: '任务分解', itemStyle: { color: '#fbbf24' } },
+                        { value: 10, name: '结果执行', itemStyle: { color: '#f87171' } },
+                        { value: 5, name: 'Memory', itemStyle: { color: '#a78bfa' } }
+                    ],
+                    label: { color: '#fff', fontSize: 11 }
+                }]
+            };
+            myChart.setOption(option);
+            window.addEventListener('resize', () => myChart.resize());
+        }
+        
+        function initLineChart() {
+            const chartDom = document.getElementById('lineChart');
+            if (!chartDom) return;
+            const myChart = echarts.init(chartDom);
+            const option = {
+                backgroundColor: 'transparent',
+                xAxis: {
+                    type: 'category',
+                    data: ['Day 1', 'Day 3', 'Day 5', 'Day 7', 'Day 9', 'Day 11'],
+                    axisLine: { lineStyle: { color: 'rgba(255,255,255,0.2)' } },
+                    axisLabel: { color: '#fff' }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '代码量(行)',
+                    nameTextStyle: { color: 'rgba(255,255,255,0.6)' },
+                    axisLine: { lineStyle: { color: 'rgba(255,255,255,0.2)' } },
+                    axisLabel: { color: '#fff' },
+                    splitLine: { lineStyle: { color: 'rgba(255,255,255,0.1)' } }
+                },
+                series: [{
+                    data: [1000, 3500, 7000, 10000, 13000, 15000],
+                    type: 'line',
+                    smooth: true,
+                    lineStyle: { color: '#a78bfa', width: 3 },
+                    areaStyle: { color: 'rgba(167,139,250,0.2)' },
+                    itemStyle: { color: '#a78bfa' }
+                }]
+            };
+            myChart.setOption(option);
+            window.addEventListener('resize', () => myChart.resize());
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initRadarChart();
+            initPieChart();
+            initLineChart();
+        });
+    </script>
+</body>
+</html>

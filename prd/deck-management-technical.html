@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>牌组管理系统技术文档 | AI PM 技术文档</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    .prd-content h1 { font-size: 2rem; font-weight: 700; margin: 2rem 0 1rem; color: #f0f0f0; }
+    .prd-content h2 { font-size: 1.5rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #e0e0e0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
+    .prd-content h3 { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 0.5rem; color: #d0d0d0; }
+    .prd-content h4 { font-size: 1.1rem; font-weight: 500; margin: 1rem 0 0.5rem; color: #c0c0c0; }
+    .prd-content p { margin: 0.75rem 0; line-height: 1.8; color: #b0b0b0; }
+    .prd-content ul, .prd-content ol { margin: 0.75rem 0; padding-left: 1.5rem; }
+    .prd-content li { margin: 0.5rem 0; color: #b0b0b0; }
+    .prd-content code { background: rgba(167, 139, 250, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #a78bfa; }
+    .prd-content pre { background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; overflow-x: auto; margin: 1rem 0; }
+    .prd-content pre code { background: none; padding: 0; }
+    .prd-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    .prd-content th, .prd-content td { border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; text-align: left; }
+    .prd-content th { background: rgba(167, 139, 250, 0.1); font-weight: 600; color: #e0e0e0; }
+    .prd-content td { color: #b0b0b0; }
+    .doc-meta { background: rgba(167, 139, 250, 0.05); border: 1px solid rgba(167, 139, 250, 0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+    .doc-meta-item { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .doc-meta-item:last-child { border-bottom: none; }
+    .doc-meta-label { color: #808080; }
+    .doc-meta-value { color: #e0e0e0; font-weight: 500; }
+    .toc { position: sticky; top: 100px; max-height: calc(100vh - 120px); overflow-y: auto; }
+    .toc a { display: block; padding: 0.5rem 0; color: #808080; font-size: 0.9rem; border-left: 2px solid transparent; padding-left: 1rem; margin-left: -1rem; }
+    .toc a:hover, .toc a.active { color: #a78bfa; border-left-color: #a78bfa; }
+    .toc a.level-2 { padding-left: 1.5rem; }
+  </style>
+</head>
+<body class="bg-[#0f0f0f] text-gray-300">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0f0f0f]/95 backdrop-blur-md border-b border-white/5">
+    <div class="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-4">
+          <a href="../index.html" class="text-xl font-bold text-white flex items-center gap-2">
+            <span class="text-2xl">🧠</span>
+            <span>AI PM 技术文档</span>
+          </a>
+        </div>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="../index.html" class="text-sm text-gray-400 hover:text-white transition-colors">首页</a>
+          <a href="../architecture.html" class="text-sm text-gray-400 hover:text-white transition-colors">架构设计</a>
+          <a href="../prd-library.html" class="text-sm text-[#a78bfa] transition-colors">PRD 库</a>
+          <a href="../data-impact.html" class="text-sm text-gray-400 hover:text-white transition-colors">数据洞察</a>
+          <a href="../about.html" class="text-sm text-gray-400 hover:text-white transition-colors">关于</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 xl:px-12">
+    <div class="max-w-[1600px] mx-auto">
+      <div class="flex gap-8">
+        <aside class="hidden lg:block w-64 flex-shrink-0">
+          <div class="toc">
+            <h3 class="text-white font-semibold mb-4 px-4">目录</h3>
+            <nav>
+              <a href="#section-1" class="level-1">一、技术架构总览</a>
+              <a href="#section-2" class="level-1">二、项目结构</a>
+              <a href="#section-3" class="level-1">三、数据库设计</a>
+              <a href="#section-4" class="level-1">四、API设计</a>
+              <a href="#section-5" class="level-1">五、前端实现</a>
+              <a href="#section-6" class="level-1">六、部署与运维</a>
+              <a href="#section-7" class="level-1">七、测试策略</a>
+              <a href="#section-8" class="level-1">八、性能优化</a>
+            </nav>
+          </div>
+        </aside>
+
+        <main class="flex-1 min-w-0">
+          <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+            <a href="../index.html" class="hover:text-white transition-colors">首页</a>
+            <span>/</span>
+            <a href="../prd-library.html" class="hover:text-white transition-colors">PRD 库</a>
+            <span>/</span>
+            <span class="text-white">牌组管理系统技术文档</span>
+          </nav>
+
+          <div class="mb-8">
+            <h1 class="text-4xl font-bold text-white mb-4">牌组管理系统技术文档</h1>
+            <p class="text-xl text-gray-400">完整的技术架构、数据库设计与API规范</p>
+          </div>
+
+          <div class="doc-meta">
+            <div class="doc-meta-item">
+              <span class="doc-meta-label">文档版本</span>
+              <span class="doc-meta-value">v1.0</span>
+            </div>
+            <div class="doc-meta-item">
+              <span class="doc-meta-label">创建日期</span>
+              <span class="doc-meta-value">2026-04-13</span>
+            </div>
+            <div class="doc-meta-item">
+              <span class="doc-meta-label">技术栈</span>
+              <span class="doc-meta-value">基于项目总览核心设计</span>
+            </div>
+          </div>
+
+          <div class="prd-content">
+            <h2 id="section-1">一、技术架构总览</h2>
+            <h3>1.1 架构图</h3>
+            <pre><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                           系统架构总览                                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                           前端层                                     │   │
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐  │   │
+│  │  │  HTML5      │ │  CSS3       │ │  ES6+       │ │  Vanilla JS │  │   │
+│  │  │  语义化标签  │ │  Flex/Grid  │ │  模块化     │ │  无框架依赖  │  │   │
+│  │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘  │   │
+│  │                                                                      │   │
+│  │  组件库：                                                            │   │
+│  │  - Chart.js (图表)                                                  │   │
+│  │  - Swiper (轮播)                                                    │   │
+│  │  - Compressor.js (图片压缩)                                         │   │
+│  │  - localForage (IndexedDB封装)                                      │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                    │                                         │
+│                                    ▼                                         │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                        数据服务层                                    │   │
+│  │                                                                      │   │
+│  │  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐ │   │
+│  │  │  Memory Cache   │    │   IndexedDB     │    │   Supabase      │ │   │
+│  │  │  (内存缓存)      │◄──►│  (本地持久化)    │◄──►│  (云端同步)     │ │   │
+│  │  │                 │    │  localForage    │    │  PostgreSQL     │ │   │
+│  │  │  - 当前会话数据  │    │  - 离线可用      │    │  - 多端同步     │ │   │
+│  │  │  - 快速读取     │    │  - 大容量存储    │    │  - 实时订阅     │ │   │
+│  │  └─────────────────┘    └─────────────────┘    └─────────────────┘ │   │
+│  │                                                                      │   │
+│  │  同步策略：离线优先，异步云端同步                                     │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                    │                                         │
+│                                    ▼                                         │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                           后端层                                     │   │
+│  │                                                                      │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐   │   │
+│  │  │                      Supabase Platform                       │   │   │
+│  │  │                                                              │   │   │
+│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │   │   │
+│  │  │  │ PostgreSQL  │  │  Storage    │  │   Auth      │        │   │   │
+│  │  │  │ 主数据库     │  │  文件存储    │  │  身份认证    │        │   │   │
+│  │  │  └─────────────┘  └─────────────┘  └─────────────┘        │   │   │
+│  │  │                                                              │   │   │
+│  │  │  ┌─────────────┐  ┌─────────────┐                          │   │   │
+│  │  │  │  Realtime   │  │  Edge Func  │                          │   │   │
+│  │  │  │  实时订阅    │  │  边缘函数    │                          │   │   │
+│  │  │  └─────────────┘  └─────────────┘                          │   │   │
+│  │  │                                                              │   │   │
+│  │  └─────────────────────────────────────────────────────────────┘   │   │
+│  │                                                                      │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘</code></pre>
+
+            <h3>1.2 核心技术选型</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>层级</th>
+                  <th>技术/工具</th>
+                  <th>版本</th>
+                  <th>用途</th>
+                  <th>选型理由</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>前端基础</td>
+                  <td>HTML5</td>
+                  <td>-</td>
+                  <td>页面结构</td>
+                  <td>原生支持，无依赖</td>
+                </tr>
+                <tr>
+                  <td>前端样式</td>
+                  <td>CSS3</td>
+                  <td>-</td>
+                  <td>样式布局</td>
+                  <td>Flex/Grid原生支持</td>
+                </tr>
+                <tr>
+                  <td>前端脚本</td>
+                  <td>ES6+</td>
+                  <td>-</td>
+                  <td>交互逻辑</td>
+                  <td>现代JS特性，模块化</td>
+                </tr>
+                <tr>
+                  <td>图表</td>
+                  <td>Chart.js</td>
+                  <td>4.x</td>
+                  <td>数据可视化</td>
+                  <td>轻量、易用、美观</td>
+                </tr>
+                <tr>
+                  <td>轮播</td>
+                  <td>Swiper</td>
+                  <td>11.x</td>
+                  <td>牌组/牌灵滑动</td>
+                  <td>触摸友好、流畅</td>
+                </tr>
+                <tr>
+                  <td>图片压缩</td>
+                  <td>Compressor.js</td>
+                  <td>1.x</td>
+                  <td>图片处理</td>
+                  <td>纯前端、高性能</td>
+                </tr>
+                <tr>
+                  <td>本地存储</td>
+                  <td>localForage</td>
+                  <td>1.x</td>
+                  <td>IndexedDB封装</td>
+                  <td>简化API、Promise</td>
+                </tr>
+                <tr>
+                  <td>后端服务</td>
+                  <td>Supabase</td>
+                  <td>2.x</td>
+                  <td>BaaS平台</td>
+                  <td>开源、功能完整</td>
+                </tr>
+                <tr>
+                  <td>数据库</td>
+                  <td>PostgreSQL</td>
+                  <td>15+</td>
+                  <td>主数据库</td>
+                  <td>Supabase内置</td>
+                </tr>
+                <tr>
+                  <td>文件存储</td>
+                  <td>Supabase Storage</td>
+                  <td>-</td>
+                  <td>图片存储</td>
+                  <td>与Supabase集成</td>
+                </tr>
+                <tr>
+                  <td>实时通信</td>
+                  <td>Supabase Realtime</td>
+                  <td>-</td>
+                  <td>数据同步</td>
+                  <td>WebSocket</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 id="section-2">二、项目结构</h2>
+            <pre><code>tarot-project/
+├── src/
+│   ├── pages/
+│   │   ├── tarot-mine.html           # 我的牌组主页面
+│   │   ├── deck-detail.html          # 牌组详情页
+│   │   ├── deck-cards.html           # 牌面子页面
+│   │   └── deck-stats.html           # 统计页面
+│   │
+│   ├── components/
+│   │   ├── deck/
+│   │   │   ├── DeckCard.js           # 牌组卡片组件
+│   │   │   ├── DeckGrid.js           # 牌组网格组件
+│   │   │   ├── DeckUploader.js       # 上传组件
+│   │   │   └── DeckSelector.js       # 牌组选择器
+│   │   │
+│   │   ├── spirit/
+│   │   │   ├── SpiritCard.js         # 牌灵卡片组件
+│   │   │   ├── SpiritSelector.js     # 牌灵选择器
+│   │   │   └── SpiritCarousel.js     # 牌灵轮播
+│   │   │
+│   │   ├── stats/
+│   │   │   ├── UsageChart.js         # 使用图表
+│   │   │   ├── TrendChart.js         # 趋势图表
+│   │   │   └── StatsCard.js          # 统计卡片
+│   │   │
+│   │   └── common/
+│   │       ├── Modal.js              # 弹窗组件
+│   │       ├── Toast.js              # 提示组件
+│   │       ├── Notification.js       # 通知组件
+│   │       └── ImageUploader.js      # 图片上传组件
+│   │
+│   ├── services/
+│   │   ├── deck/
+│   │   │   ├── DeckService.js        # 牌组核心服务
+│   │   │   ├── DeckStorageService.js # 存储服务
+│   │   │   └── DeckSyncService.js    # 同步服务
+│   │   │
+│   │   ├── image/
+│   │   │   ├── ImageService.js       # 图片处理
+│   │   │   └── ImageCompressService.js # 图片压缩
+│   │   │
+│   │   ├── stats/
+│   │   │   ├── StatsService.js       # 统计服务
+│   │   │   └── ReminderService.js    # 提醒服务
+│   │   │
+│   │   └── relation/
+│   │       ├── SpiritRelationService.js      # 牌灵关联
+│   │       ├── DrawRecordRelationService.js  # 抽牌记录关联
+│   │       └── ClientRelationService.js      # 客户关联
+│   │
+│   ├── stores/
+│   │   ├── DeckStore.js              # 牌组状态管理
+│   │   ├── SpiritStore.js            # 牌灵状态管理
+│   │   └── StatsStore.js             # 统计状态管理
+│   │
+│   ├── utils/
+│   │   ├── idGenerator.js            # ID生成器
+│   │   ├── dateUtils.js              # 日期工具
+│   │   ├── validators.js             # 验证工具
+│   │   └── formatters.js             # 格式化工具
+│   │
+│   ├── data/
+│   │   └── presetDecks.js            # 预设牌组数据
+│   │
+│   ├── styles/
+│   │   ├── deck-management.css       # 牌组管理样式
+│   │   ├── components.css            # 组件样式
+│   │   └── responsive.css            # 响应式样式
+│   │
+│   └── config/
+│       ├── supabase.js               # Supabase配置
+│       └── constants.js              # 常量配置
+│
+├── supabase/
+│   ├── migrations/
+│   │   ├── 001_create_decks.sql      # 牌组表
+│   │   ├── 002_create_usages.sql     # 使用记录表
+│   │   └── 003_create_policies.sql   # 权限策略
+│   │
+│   └── functions/
+│       └── sync_deck_stats.sql       # 统计同步函数
+│
+└── tests/
+    ├── unit/
+    │   └── services.test.js
+    └── integration/
+        └── api.test.js</code></pre>
+
+            <h2 id="section-3">三、数据库设计</h2>
+            <h3>3.1 表结构</h3>
+            <pre><code>-- ==================== 牌组表 ====================
+CREATE TABLE decks (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    
+    -- 编号（自动生成）
+    sequence_number INTEGER NOT NULL,
+    
+    -- 基本信息
+    name TEXT NOT NULL,
+    preset_id TEXT,
+    
+    -- 牌灵信息
+    spirit_card_id TEXT NOT NULL,
+    spirit_card_name TEXT NOT NULL,
+    spirit_bonded_at TIMESTAMPTZ DEFAULT NOW(),
+    spirit_bond_type TEXT CHECK (spirit_bond_type IN ('chosen', 'drawn')),
+    
+    -- 图片（存储URL或base64标识）
+    image_cover TEXT,
+    image_back TEXT,
+    image_samples JSONB DEFAULT '[]',
+    
+    -- 档案信息
+    archive_purchase_date DATE,
+    archive_purchase_price INTEGER,
+    archive_condition TEXT CHECK (archive_condition IN ('brand_new', 'good', 'fair', 'worn')),
+    archive_card_count INTEGER DEFAULT 78,
+    archive_size TEXT,
+    archive_material TEXT,
+    archive_notes TEXT,
+    
+    -- 性格档案
+    personality_description TEXT,
+    personality_traits JSONB DEFAULT '[]',
+    personality_user_tags JSONB DEFAULT '[]',
+    
+    -- 状态
+    status_is_pinned BOOLEAN DEFAULT false,
+    status_is_active BOOLEAN DEFAULT true,
+    status_is_archived BOOLEAN DEFAULT false,
+    
+    -- 元数据
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 索引
+CREATE INDEX idx_decks_user_id ON decks(user_id);
+CREATE INDEX idx_decks_sequence ON decks(user_id, sequence_number);
+CREATE INDEX idx_decks_spirit ON decks(spirit_card_id);
+CREATE INDEX idx_decks_pinned ON decks(user_id, status_is_pinned) WHERE status_is_pinned = true;
+
+-- ==================== 使用记录表 ====================
+CREATE TABLE deck_usages (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    deck_id UUID REFERENCES decks(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    
+    -- 使用信息
+    timestamp TIMESTAMPTZ DEFAULT NOW(),
+    spread_id TEXT,
+    spread_name TEXT,
+    question TEXT,
+    
+    -- 抽牌结果
+    cards JSONB NOT NULL, -- [{name, position, orientation}, ...]
+    
+    -- 关联
+    draw_record_id UUID,
+    client_id UUID,
+    
+    -- 环境信息
+    mood TEXT,
+    environment TEXT,
+    notes TEXT,
+    
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_usages_deck ON deck_usages(deck_id);
+CREATE INDEX idx_usages_timestamp ON deck_usages(deck_id, timestamp DESC);
+CREATE INDEX idx_usages_client ON deck_usages(client_id) WHERE client_id IS NOT NULL;
+
+-- ==================== 对话记录表 ====================
+CREATE TABLE deck_conversations (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    deck_id UUID REFERENCES decks(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    
+    -- 类型：dialogue(与牌对话) | case(抽牌案例)
+    type TEXT CHECK (type IN ('dialogue', 'case')),
+    
+    -- 基本信息
+    date TIMESTAMPTZ DEFAULT NOW(),
+    question TEXT,
+    answer TEXT,
+    
+    -- 抽到的牌
+    cards JSONB DEFAULT '[]',
+    
+    -- 案例特有
+    client_id UUID,
+    client_name TEXT,
+    spread_id TEXT,
+    spread_name TEXT,
+    draw_record_id UUID,
+    
+    -- 心情
+    mood TEXT,
+    
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_conversations_deck ON deck_conversations(deck_id);
+CREATE INDEX idx_conversations_type ON deck_conversations(deck_id, type);
+CREATE INDEX idx_conversations_date ON deck_conversations(deck_id, date DESC);
+
+-- ==================== 使用统计表（物化视图）====================
+CREATE MATERIALIZED VIEW deck_stats AS
+SELECT 
+    deck_id,
+    COUNT(*) as total_uses,
+    MIN(timestamp) as first_used_at,
+    MAX(timestamp) as last_used_at,
+    COUNT(*) FILTER (WHERE timestamp >= NOW() - INTERVAL '7 days') as weekly_uses,
+    COUNT(*) FILTER (WHERE timestamp >= NOW() - INTERVAL '30 days') as monthly_uses,
+    mode() WITHIN GROUP (ORDER BY spread_id) as favorite_spread
+FROM deck_usages
+GROUP BY deck_id;
+
+-- 刷新统计视图的函数
+CREATE OR REPLACE FUNCTION refresh_deck_stats()
+RETURNS void AS $$
+BEGIN
+    REFRESH MATERIALIZED VIEW deck_stats;
+END;
+$$ LANGUAGE plpgsql;</code></pre>
+
+            <h3>3.2 Row Level Security (RLS)</h3>
+            <pre><code>-- 启用RLS
+ALTER TABLE decks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE deck_usages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE deck_conversations ENABLE ROW LEVEL SECURITY;
+
+-- 牌组表策略
+CREATE POLICY "Users can only access their own decks"
+    ON decks FOR ALL
+    USING (auth.uid() = user_id);
+
+-- 使用记录表策略
+CREATE POLICY "Users can only access their own usage records"
+    ON deck_usages FOR ALL
+    USING (auth.uid() = user_id);
+
+-- 对话记录表策略
+CREATE POLICY "Users can only access their own conversations"
+    ON deck_conversations FOR ALL
+    USING (auth.uid() = user_id);</code></pre>
+
+            <h2 id="section-4">四、API设计</h2>
+            <h3>4.1 RESTful API</h3>
+            <pre><code>// ==================== 牌组 API ====================
+
+/**
+ * 获取用户的所有牌组
+ * GET /rest/v1/decks?select=*&user_id=eq.{userId}&order=sequence_number.asc
+ */
+const getDecks = async () => {
+  const { data, error } = await supabase
+    .from('decks')
+    .select('*')
+    .order('sequence_number', { ascending: true });
+  
+  return { data, error };
+};
+
+/**
+ * 获取单个牌组
+ * GET /rest/v1/decks?select=*&id=eq.{deckId}
+ */
+const getDeckById = async (deckId) => {
+  const { data, error } = await supabase
+    .from('decks')
+    .select(`
+      *,
+      deck_usages (count),
+      deck_conversations (*)
+    `)
+    .eq('id', deckId)
+    .single();
+  
+  return { data, error };
+};
+
+/**
+ * 创建牌组
+ * POST /rest/v1/decks
+ */
+const createDeck = async (deckData) => {
+  // 1. 获取当前最大编号
+  const { data: maxSeq } = await supabase
+    .from('decks')
+    .select('sequence_number')
+    .order('sequence_number', { ascending: false })
+    .limit(1)
+    .single();
+  
+  const sequenceNumber = (maxSeq?.sequence_number || 0) + 1;
+  
+  // 2. 创建牌组
+  const { data, error } = await supabase
+    .from('decks')
+    .insert([{
+      ...deckData,
+      sequence_number: sequenceNumber,
+      user_id: supabase.auth.user().id
+    }])
+    .select()
+    .single();
+  
+  return { data, error };
+};
+
+/**
+ * 置顶/取消置顶
+ * PATCH /rest/v1/decks?id=eq.{deckId}
+ */
+const togglePinDeck = async (deckId, isPinned) => {
+  return await updateDeck(deckId, {
+    status_is_pinned: isPinned
+  });
+};</code></pre>
+
+            <h3>4.2 Realtime 订阅</h3>
+            <pre><code>// ==================== 实时订阅 ====================
+
+class RealtimeService {
+  constructor() {
+    this.subscriptions = new Map();
+  }
+  
+  /**
+   * 订阅牌组变化
+   */
+  subscribeToDecks(callback) {
+    const subscription = supabase
+      .channel('decks_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'decks',
+          filter: `user_id=eq.${supabase.auth.user().id}`
+        },
+        (payload) => {
+          callback(payload);
+        }
+      )
+      .subscribe();
+    
+    this.subscriptions.set('decks', subscription);
+    return subscription;
+  }
+  
+  /**
+   * 订阅使用记录变化
+   */
+  subscribeToUsages(deckId, callback) {
+    const subscription = supabase
+      .channel(`usages_${deckId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'deck_usages',
+          filter: `deck_id=eq.${deckId}`
+        },
+        (payload) => {
+          callback(payload.new);
+        }
+      )
+      .subscribe();
+    
+    this.subscriptions.set(`usages_${deckId}`, subscription);
+    return subscription;
+  }
+}</code></pre>
+
+            <h2 id="section-5">五、前端实现</h2>
+            <h3>5.1 核心服务实现</h3>
+            <pre><code>// services/deck/DeckService.js
+
+import { supabase } from '../../config/supabase.js';
+import { DeckStorageService } from './DeckStorageService.js';
+import { DeckSyncService } from './DeckSyncService.js';
+
+export class DeckService {
+  /**
+   * 获取所有牌组（离线优先）
+   */
+  static async getAllDecks() {
+    // 1. 先从本地获取
+    let decks = await DeckStorageService.getAllFromLocal();
+    
+    // 2. 如果本地没有，从云端获取
+    if (!decks || decks.length === 0) {
+      const { data, error } = await supabase
+        .from('decks')
+        .select('*')
+        .eq('status_is_archived', false)
+        .order('sequence_number', { ascending: true });
+      
+      if (error) throw error;
+      
+      decks = data;
+      
+      // 保存到本地
+      await DeckStorageService.saveAllToLocal(decks);
+    }
+    
+    return decks;
+  }
+  
+  /**
+   * 创建牌组
+   */
+  static async createDeck(deckData) {
+    // 1. 处理图片
+    const processedImages = await this.processImages(deckData.images);
+    
+    // 2. 生成编号
+    const decks = await this.getAllDecks();
+    const sequenceNumber = this.generateSequenceNumber(
+      deckData.archive.purchaseDate,
+      decks
+    );
+    
+    // 3. 构建数据
+    const deck = {
+      ...deckData,
+      sequence_number: sequenceNumber,
+      images: processedImages,
+      user_id: supabase.auth.user().id
+    };
+    
+    // 4. 保存到云端
+    const { data, error } = await supabase
+      .from('decks')
+      .insert([deck])
+      .select()
+      .single();
+    
+    if (error) throw error;
+    
+    // 5. 保存到本地
+    await DeckStorageService.saveToLocal(data);
+    
+    return data;
+  }
+  
+  /**
+   * 压缩图片
+   */
+  static async compressImage(file, maxWidth) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          
+          let width = img.width;
+          let height = img.height;
+          
+          if (width > maxWidth) {
+            height = (maxWidth / width) * height;
+            width = maxWidth;
+          }
+          
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          resolve(canvas.toDataURL('image/jpeg', 0.8));
+        };
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+}</code></pre>
+
+            <h2 id="section-6">六、部署与运维</h2>
+            <h3>6.1 部署流程</h3>
+            <pre><code># 1. 部署 Supabase 数据库
+supabase link --project-ref <project-ref>
+supabase db push
+
+# 2. 部署前端（静态托管）
+# 上传到任意静态托管服务（Vercel/Netlify/Cloudflare Pages）
+
+# 3. 配置环境变量
+cp .env.example .env
+# 编辑 .env 文件，填入 Supabase 配置</code></pre>
+
+            <h3>6.2 环境变量</h3>
+            <pre><code># .env
+# Supabase 配置
+SUPABASE_URL=https://<project-ref>.supabase.co
+SUPABASE_ANON_KEY=<anon-key>
+
+# 应用配置
+APP_NAME=塔罗笔记
+APP_VERSION=1.0.0</code></pre>
+
+            <h2 id="section-7">七、测试策略</h2>
+            <h3>7.1 单元测试</h3>
+            <pre><code>// tests/unit/DeckService.test.js
+
+import { DeckService } from '../../src/services/deck/DeckService.js';
+
+describe('DeckService', () => {
+  test('generateSequenceNumber', () => {
+    const decks = [
+      { archive_purchase_date: '2024-01-01' },
+      { archive_purchase_date: '2024-03-01' }
+    ];
+    
+    // 新牌组日期在中间
+    const seq1 = DeckService.generateSequenceNumber('2024-02-01', decks);
+    expect(seq1).toBe(2);
+    
+    // 新牌组日期最早
+    const seq2 = DeckService.generateSequenceNumber('2023-12-01', decks);
+    expect(seq2).toBe(1);
+  });
+});</code></pre>
+
+            <h2 id="section-8">八、性能优化</h2>
+            <h3>8.1 加载优化</h3>
+            <pre><code>// 懒加载图片
+const imageObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      img.src = img.dataset.src;
+      img.classList.remove('lazy');
+      imageObserver.unobserve(img);
+    }
+  });
+});
+
+// Service Worker 缓存
+const CACHE_NAME = 'tarot-app-v1';
+
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      // 缓存优先
+      if (response) {
+        return response;
+      }
+      
+      return fetch(event.request).then((response) => {
+        // 缓存新请求
+        if (response.status === 200) {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+        }
+        return response;
+      });
+    })
+  );
+});</code></pre>
+
+            <hr>
+            <p class="text-center text-gray-500">文档结束</p>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-white/5 py-8 px-4 sm:px-6 lg:px-8 xl:px-12">
+    <div class="max-w-[1600px] mx-auto text-center text-gray-500 text-sm">
+      <p>© 2026 AI PM 技术文档 | 使用 HTML + Tailwind CSS 构建</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

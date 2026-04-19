@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bad Case分析体系 - 系统化记录和分析AI失败案例">
+    <title>Bad Case分析体系 | AI PM Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#a78bfa',
+                        background: '#0f0f0f',
+                        'card-bg': 'rgba(255, 255, 255, 0.05)',
+                        'border-default': 'rgba(255, 255, 255, 0.1)',
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="bg-background text-white min-h-screen">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-b border-border-default">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-xl font-semibold text-white hover:text-primary transition">
+                <span>🤖</span>
+                <span>AI PM Portfolio</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="nav-link" data-page="index.html">首页</a>
+                <a href="architecture.html" class="nav-link" data-page="architecture.html">架构总览</a>
+                <a href="topic-model.html" class="nav-link active" data-page="topic-model.html">技术专题</a>
+                <a href="prd-library.html" class="nav-link" data-page="prd-library.html">PRD文档</a>
+                <a href="data-impact.html" class="nav-link" data-page="data-impact.html">数据影响</a>
+                <a href="about.html" class="nav-link" data-page="about.html">关于我</a>
+                <a href="赵梦婷AI产品方向简历.pdf" download class="btn btn--primary text-sm py-2 px-4">下载简历</a>
+            </div>
+            <button id="mobileMenuBtn" class="md:hidden text-white p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-background border-t border-border-default">
+            <div class="px-6 py-4 space-y-3">
+                <a href="index.html" class="block py-2 text-white/60 hover:text-white">首页</a>
+                <a href="architecture.html" class="block py-2 text-white/60 hover:text-white">架构总览</a>
+                <a href="topic-model.html" class="block py-2 text-primary font-medium">技术专题</a>
+                <a href="prd-library.html" class="block py-2 text-white/60 hover:text-white">PRD文档</a>
+                <a href="data-impact.html" class="block py-2 text-white/60 hover:text-white">数据影响</a>
+                <a href="about.html" class="block py-2 text-white/60 hover:text-white">关于我</a>
+                <a href="赵梦婷AI产品方向简历.pdf" download class="block py-2 text-primary font-medium">下载简历</a>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="pt-16">
+        <section class="py-16 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="inline-block px-4 py-2 bg-primary text-background text-sm font-semibold rounded-lg mb-6">03</span>
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Bad Case分析体系</h1>
+                <h2 class="text-xl text-primary mb-6">Bad Case Analysis System</h2>
+                <p class="text-lg text-white/60 max-w-2xl mx-auto">系统化记录和分析AI失败案例，从失败中学习，持续迭代优化</p>
+            </div>
+        </section>
+        
+        <section class="py-12 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-8">核心概念</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-4">概念定义</h3>
+                        <p class="text-white/60 leading-relaxed">Bad Case是指AI在实际应用中产生的不满意结果。通过建立系统化的Bad Case收集、分类、分析流程，找出问题根源并制定优化策略。</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-4">为什么重要</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">发现问题</strong> - 识别AI的薄弱环节</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">归因分析</strong> - 找到问题根本原因</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">持续改进</strong> - 形成优化闭环</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-12 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-8">实践方法</h2>
+                <div class="bg-card-bg border border-border-default rounded-2xl p-8 mb-8">
+                    <h3 class="text-xl font-semibold text-white mb-6">Bad Case分类体系</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="text-2xl mb-3">🤖</div>
+                            <div class="text-white font-medium mb-2">模型局限</div>
+                            <div class="text-sm text-white/60">模型能力不足导致的错误</div>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="text-2xl mb-3">📝</div>
+                            <div class="text-white font-medium mb-2">提示词问题</div>
+                            <div class="text-sm text-white/60">Prompt设计不当导致</div>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="text-2xl mb-3">💭</div>
+                            <div class="text-white font-medium mb-2">上下文不足</div>
+                            <div class="text-sm text-white/60">缺少必要的背景信息</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold text-white mb-6">分析流程</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">1</span>
+                            <div><div class="text-white font-medium">收集记录</div><div class="text-sm text-white/60">记录Bad Case的完整上下文</div></div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">2</span>
+                            <div><div class="text-white font-medium">分类归因</div><div class="text-sm text-white/60">确定问题类型和根本原因</div></div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">3</span>
+                            <div><div class="text-white font-medium">制定策略</div><div class="text-sm text-white/60">针对原因制定优化方案</div></div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-sm font-bold text-background">4</span>
+                            <div><div class="text-white font-medium">验证效果</div><div class="text-sm text-white/60">测试优化后的效果</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-12 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-8">项目案例：塔罗解读错误分析</h2>
+                <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold text-white mb-6">典型案例</h3>
+                    <div class="space-y-6">
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="px-3 py-1 bg-red-500/20 text-red-400 text-xs rounded-full">模型局限</span>
+                                <span class="text-white/40 text-sm">2026-04-10</span>
+                            </div>
+                            <p class="text-white/80 mb-2"><strong>问题：</strong>AI将"逆位死神"解读为"完全失败"，忽略了"转变与重生"的含义</p>
+                            <p class="text-primary text-sm"><strong>优化：</strong>在提示词中强化正逆位解读规则</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full">提示词问题</span>
+                                <span class="text-white/40 text-sm">2026-04-12</span>
+                            </div>
+                            <p class="text-white/80 mb-2"><strong>问题：</strong>AI解读过于笼统，没有结合具体牌阵位置</p>
+                            <p class="text-primary text-sm"><strong>优化：</strong>在Prompt中加入牌阵位置说明</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-12 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-8">经验总结</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2"><span class="text-green-400">✓</span>最佳实践</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">建立记录模板</strong> - 统一BadCase记录格式</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">定期复盘</strong> - 每周分析BadCase趋势</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">优先级排序</strong> - 先解决高频问题</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2"><span class="text-red-400">⚠</span>避坑指南</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">不要忽视小概率</strong> - 积累起来影响体验</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">避免过度优化</strong> - 不要为了个案破坏整体</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">记录要完整</strong> - 上下文信息很重要</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-12 px-6 border-t border-border-default">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <a href="topic-evaluation.html" class="btn btn--secondary">← 上一个专题：评测数据集</a>
+                    <a href="index.html" class="btn btn--text">返回首页</a>
+                    <a href="topic-knowledge.html" class="btn btn--secondary">下一个专题：知识库构建 →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-white/5 border-t border-border-default">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-white/60 text-sm">赵梦婷 | AI产品助理/AI售前顾问</div>
+                <div class="text-white/60 text-sm">邮箱: mengtingthea@163.com | 电话: 187-2530-3017</div>
+            </div>
+            <div class="text-center text-white/40 text-sm mt-4">© 2026 AI PM Portfolio. All rights reserved.</div>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+</body>
+</html>

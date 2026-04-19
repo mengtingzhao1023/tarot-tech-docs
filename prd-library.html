@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PRD文档库 - 项目文档中心">
+    <title>PRD文档库 | AI PM Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#a78bfa',
+                        background: '#0f0f0f',
+                        'card-bg': 'rgba(255, 255, 255, 0.05)',
+                        'border-default': 'rgba(255, 255, 255, 0.1)',
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="bg-background text-white min-h-screen">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-b border-border-default">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-xl font-semibold text-white hover:text-primary transition">
+                <span>🤖</span>
+                <span>AI PM Portfolio</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="nav-link" data-page="index.html">首页</a>
+                <a href="architecture.html" class="nav-link" data-page="architecture.html">架构总览</a>
+                <a href="topic-model.html" class="nav-link" data-page="topic-model.html">技术专题</a>
+                <a href="prd-library.html" class="nav-link active" data-page="prd-library.html">PRD文档</a>
+                <a href="data-impact.html" class="nav-link" data-page="data-impact.html">数据影响</a>
+                <a href="about.html" class="nav-link" data-page="about.html">关于我</a>
+                <a href="赵梦婷AI产品方向简历.pdf" download class="btn btn--primary text-sm py-2 px-4">下载简历</a>
+            </div>
+            <button id="mobileMenuBtn" class="md:hidden text-white p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-background border-t border-border-default">
+            <div class="px-6 py-4 space-y-3">
+                <a href="index.html" class="block py-2 text-white/60 hover:text-white">首页</a>
+                <a href="architecture.html" class="block py-2 text-white/60 hover:text-white">架构总览</a>
+                <a href="topic-model.html" class="block py-2 text-white/60 hover:text-white">技术专题</a>
+                <a href="prd-library.html" class="block py-2 text-primary font-medium">PRD文档</a>
+                <a href="data-impact.html" class="block py-2 text-white/60 hover:text-white">数据影响</a>
+                <a href="about.html" class="block py-2 text-white/60 hover:text-white">关于我</a>
+                <a href="赵梦婷AI产品方向简历.pdf" download class="block py-2 text-primary font-medium">下载简历</a>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="pt-16">
+        <section class="py-16 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">PRD文档库</h1>
+                <h2 class="text-xl text-primary mb-6">项目文档中心</h2>
+                <p class="text-lg text-white/60 max-w-2xl mx-auto">完整记录塔罗项目从需求到实现的全部文档</p>
+            </div>
+        </section>
+        
+        <section class="py-12 px-6">
+            <div class="max-w-6xl mx-auto">
+                <!-- Filter Tags -->
+                <div class="flex flex-wrap justify-center gap-3 mb-12">
+                    <button class="px-4 py-2 bg-primary text-background rounded-lg font-medium">全部</button>
+                    <button class="px-4 py-2 bg-white/5 text-white/60 rounded-lg hover:bg-white/10 transition">需求文档</button>
+                    <button class="px-4 py-2 bg-white/5 text-white/60 rounded-lg hover:bg-white/10 transition">设计文档</button>
+                    <button class="px-4 py-2 bg-white/5 text-white/60 rounded-lg hover:bg-white/10 transition">技术文档</button>
+                    <button class="px-4 py-2 bg-white/5 text-white/60 rounded-lg hover:bg-white/10 transition">开发计划</button>
+                </div>
+                
+                <!-- PRD Documents -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-white mb-6">需求文档 (PRD)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-card-bg border border-border-default rounded-2xl p-6 hover:border-primary transition">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-2xl">📄</span>
+                                <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">PRD</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">牌组管理系统PRD v2</h3>
+                            <p class="text-sm text-white/60 mb-4">牌组管理、牌灵绑定、使用提醒等功能需求</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-white/40">2026-04-13</span>
+                                <a href="prd/deck-management-v2.html" class="text-primary text-sm hover:underline">查看详情 →</a>
+                            </div>
+                        </div>
+                        <div class="bg-card-bg border border-border-default rounded-2xl p-6 hover:border-primary transition">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-2xl">📄</span>
+                                <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">PRD</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">塔罗牌区域导航重构PRD</h3>
+                            <p class="text-sm text-white/60 mb-4">从侧边栏导航改为顶部导航栏模式</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-white/40">2026-04-12</span>
+                                <a href="prd/tarot-navigation-refactor.html" class="text-primary text-sm hover:underline">查看详情 →</a>
+                            </div>
+                        </div>
+                        <div class="bg-card-bg border border-border-default rounded-2xl p-6 hover:border-primary transition">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-2xl">🎨</span>
+                                <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">功能设计</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">牌组管理系统功能设计文档</h3>
+                            <p class="text-sm text-white/60 mb-4">详细的功能设计、数据模型与服务架构</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-white/40">2026-04-13</span>
+                                <a href="prd/deck-management-functional.html" class="text-primary text-sm hover:underline">查看详情 →</a>
+                            </div>
+                        </div>
+                        <div class="bg-card-bg border border-border-default rounded-2xl p-6 hover:border-primary transition">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-2xl">⚙️</span>
+                                <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">技术</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">牌组管理系统技术文档</h3>
+                            <p class="text-sm text-white/60 mb-4">完整的技术架构、数据库设计与API规范</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-white/40">2026-04-13</span>
+                                <a href="prd/deck-management-technical.html" class="text-primary text-sm hover:underline">查看详情 →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Design Documents -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-white mb-6">设计文档</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-card-bg border border-border-default rounded-2xl p-6 hover:border-primary transition">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-2xl">🎨</span>
+                                <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">设计</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">牌组管理UI设计文档 v2</h3>
+                            <p class="text-sm text-white/60 mb-4">界面布局、交互流程、视觉规范</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-white/40">2026-04-13</span>
+                                <a href="#" class="text-primary text-sm hover:underline">查看详情 →</a>
+                            </div>
+                        </div>
+                        <div class="bg-card-bg border border-border-default rounded-2xl p-6 hover:border-primary transition">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-2xl">🎨</span>
+                                <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">设计</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">学习区与AI教练区联动方案</h3>
+                            <p class="text-sm text-white/60 mb-4">数据流转、界面联动、交互设计</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-white/40">2026-04-12</span>
+                                <a href="#" class="text-primary text-sm hover:underline">查看详情 →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Technical Documents -->
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-6">技术文档</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-card-bg border border-border-default rounded-2xl p-6 hover:border-primary transition">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-2xl">⚙️</span>
+                                <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">技术</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">技术文档网站PRD</h3>
+                            <p class="text-sm text-white/60 mb-4">AI PM技术能力展示网站完整需求文档</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-white/40">2026-04-17</span>
+                                <a href="#" class="text-primary text-sm hover:underline">查看详情 →</a>
+                            </div>
+                        </div>
+                        <div class="bg-card-bg border border-border-default rounded-2xl p-6 hover:border-primary transition">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-2xl">⚙️</span>
+                                <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">技术</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">UI设计文档</h3>
+                            <p class="text-sm text-white/60 mb-4">技术文档网站UI设计规范</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-white/40">2026-04-17</span>
+                                <a href="#" class="text-primary text-sm hover:underline">查看详情 →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-white/5 border-t border-border-default">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-white/60 text-sm">赵梦婷 | AI产品助理/AI售前顾问</div>
+                <div class="text-white/60 text-sm">邮箱: mengtingthea@163.com | 电话: 187-2530-3017</div>
+            </div>
+            <div class="text-center text-white/40 text-sm mt-4">© 2026 AI PM Portfolio. All rights reserved.</div>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+</body>
+</html>

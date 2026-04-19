@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Agent设计 - 牌性格系统，每副牌拥有独特的性格">
+    <title>Agent设计 | AI PM Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#a78bfa',
+                        background: '#0f0f0f',
+                        'card-bg': 'rgba(255, 255, 255, 0.05)',
+                        'border-default': 'rgba(255, 255, 255, 0.1)',
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="bg-background text-white min-h-screen">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-b border-border-default">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 text-xl font-semibold text-white hover:text-primary transition">
+                <span>🤖</span>
+                <span>AI PM Portfolio</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="nav-link" data-page="index.html">首页</a>
+                <a href="architecture.html" class="nav-link" data-page="architecture.html">架构总览</a>
+                <a href="topic-model.html" class="nav-link active" data-page="topic-model.html">技术专题</a>
+                <a href="prd-library.html" class="nav-link" data-page="prd-library.html">PRD文档</a>
+                <a href="data-impact.html" class="nav-link" data-page="data-impact.html">数据影响</a>
+                <a href="about.html" class="nav-link" data-page="about.html">关于我</a>
+                <a href="赵梦婷AI产品方向简历.pdf" download class="btn btn--primary text-sm py-2 px-4">下载简历</a>
+            </div>
+            <button id="mobileMenuBtn" class="md:hidden text-white p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-background border-t border-border-default">
+            <div class="px-6 py-4 space-y-3">
+                <a href="index.html" class="block py-2 text-white/60 hover:text-white">首页</a>
+                <a href="architecture.html" class="block py-2 text-white/60 hover:text-white">架构总览</a>
+                <a href="topic-model.html" class="block py-2 text-primary font-medium">技术专题</a>
+                <a href="prd-library.html" class="block py-2 text-white/60 hover:text-white">PRD文档</a>
+                <a href="data-impact.html" class="block py-2 text-white/60 hover:text-white">数据影响</a>
+                <a href="about.html" class="block py-2 text-white/60 hover:text-white">关于我</a>
+                <a href="赵梦婷AI产品方向简历.pdf" download class="block py-2 text-primary font-medium">下载简历</a>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="pt-16">
+        <section class="py-16 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="inline-block px-4 py-2 bg-primary text-background text-sm font-semibold rounded-lg mb-6">05</span>
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Agent设计</h1>
+                <h2 class="text-xl text-primary mb-6">Agent Design - Card Personality System</h2>
+                <p class="text-lg text-white/60 max-w-2xl mx-auto">牌性格系统 - 每副牌拥有独特的"性格"，影响AI解读风格</p>
+            </div>
+        </section>
+        
+        <section class="py-12 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-8">核心概念</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-4">概念定义</h3>
+                        <p class="text-white/60 leading-relaxed">Agent设计是为AI赋予特定角色和能力的过程。在塔罗项目中，每副牌都是一个独特的Agent，拥有基于牌灵、对话记录和用户标签形成的"性格"，影响AI的解读风格和交互方式。</p>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-4">为什么重要</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">个性化</strong> - 让每副牌都有独特风格</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">情感连接</strong> - 增强用户与牌的互动</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">灵活性</strong> - 适应不同用户需求</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-12 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-8">牌性格系统</h2>
+                <div class="bg-card-bg border border-border-default rounded-2xl p-8 mb-8">
+                    <div class="text-center mb-8">
+                        <p class="text-lg text-white/80 mb-6">牌灵(初始) + 对话记录(积累) + 用户标签(编辑) = 独特牌格</p>
+                        <div class="flex flex-wrap justify-center items-center gap-4">
+                            <div class="text-center p-4 bg-white/5 rounded-xl">
+                                <div class="text-2xl mb-2">🎴</div>
+                                <div class="text-white text-sm">愚人牌灵</div>
+                                <div class="text-white/60 text-xs">活泼·冒险</div>
+                            </div>
+                            <span class="text-primary text-xl">+</span>
+                            <div class="text-center p-4 bg-white/5 rounded-xl">
+                                <div class="text-2xl mb-2">💬</div>
+                                <div class="text-white text-sm">30次对话</div>
+                                <div class="text-white/60 text-xs">积累记忆</div>
+                            </div>
+                            <span class="text-primary text-xl">+</span>
+                            <div class="text-center p-4 bg-white/5 rounded-xl">
+                                <div class="text-2xl mb-2">🏷️</div>
+                                <div class="text-white text-sm">用户标签</div>
+                                <div class="text-white/60 text-xs">温柔·鼓励</div>
+                            </div>
+                            <span class="text-primary text-xl">=</span>
+                            <div class="text-center p-4 bg-primary/20 border border-primary rounded-xl">
+                                <div class="text-2xl mb-2">✨</div>
+                                <div class="text-primary text-sm font-medium">活泼鼓励型</div>
+                                <div class="text-white/60 text-xs">独特牌格</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-6">影响因素</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">AI解读语气</strong> - 严肃/轻松/神秘/直接</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">推荐卡牌</strong> - 偏好某些牌的出现</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">对话风格</strong> - 引导式/启发式/直接式</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">使用建议</strong> - 适合什么类型的咨询</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-6">22种牌灵性格</h3>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div class="text-white/60">愚者 - 活泼冒险</div>
+                            <div class="text-white/60">魔术师 - 自信创造</div>
+                            <div class="text-white/60">女祭司 - 神秘直觉</div>
+                            <div class="text-white/60">皇后 - 温暖滋养</div>
+                            <div class="text-white/60">皇帝 - 权威稳定</div>
+                            <div class="text-white/60">教皇 - 智慧引导</div>
+                            <div class="text-white/60">恋人 - 和谐关系</div>
+                            <div class="text-white/60">战车 - 坚定意志</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-12 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-white mb-8">经验总结</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2"><span class="text-green-400">✓</span>最佳实践</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">平衡个性化</strong> - 既要有特色又要保证质量</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">用户可控</strong> - 允许用户调整标签</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">渐进积累</strong> - 性格随对话逐步成型</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-card-bg border border-border-default rounded-2xl p-8">
+                        <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-2"><span class="text-red-400">⚠</span>避坑指南</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">避免过度个性化</strong> - 影响核心解读质量</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">注意一致性</strong> - 性格要稳定可预期</span></li>
+                            <li class="flex items-start gap-3"><span class="text-primary mt-1">•</span><span class="text-white/60"><strong class="text-white">尊重用户</strong> - 标签编辑权交给用户</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-12 px-6 border-t border-border-default">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <a href="topic-knowledge.html" class="btn btn--secondary">← 上一个专题：知识库构建</a>
+                    <a href="index.html" class="btn btn--text">返回首页</a>
+                    <a href="topic-decomposition.html" class="btn btn--secondary">下一个专题：任务分解 →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-white/5 border-t border-border-default">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-white/60 text-sm">赵梦婷 | AI产品助理/AI售前顾问</div>
+                <div class="text-white/60 text-sm">邮箱: mengtingthea@163.com | 电话: 187-2530-3017</div>
+            </div>
+            <div class="text-center text-white/40 text-sm mt-4">© 2026 AI PM Portfolio. All rights reserved.</div>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    <script src="js/navigation.js"></script>
+</body>
+</html>
